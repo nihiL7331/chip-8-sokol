@@ -36,5 +36,36 @@ add_executable(chip8
 target_include_directories(chip8 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/vendor)
 
 # Sokol requires the OS's native grahpics/audio libs to open a window.
-# NOTE: These libraries are for Linux.
-target_link_libraries(chip8 PRIVATE GL X11 Xi Xcursor asound m pthread)
+if (APPLE)
+  # On macOS treat C++ as Objective-C++
+  enable_language(OBJCXX)
+  set_source_files_properties(src/sokol.cpp PROPERTIES LANGUAGE OBJCXX)
+    
+  target_link_libraries(chip8 PRIVATE
+    "-framework Cocoa"
+    "-framework QuartzCore"
+    "-framework OpenGL"
+    "-framework AudioToolbox"
+  )
+elseif (UNIX AND NOT APPLE) # Linux
+  target_link_libraries(chip8 PRIVATE
+    GL
+    dl
+    m
+    pthread
+    X11
+    Xi
+    Xcursor
+    Xrandr
+    asound  
+  )
+elseif (WIN32)
+  target_link_libraries(chip8 PRIVATE
+    kernel32
+    user32
+    shell32
+    gdi32
+    d3d11
+    dxgi
+  )
+endif()

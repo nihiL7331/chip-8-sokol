@@ -1,4 +1,4 @@
-# (Yet another) CHIP-8 Interpreter written in C++.
+# (Yet another) CHIP-8 Interpreter written in C++
 
 ## Usage
 
@@ -17,6 +17,10 @@ Example roms can be found in the **roms** directory.
 ## Dependencies
 
 Uses **Sokol** for rendering and audio.
+
+## Platforms
+
+Tested with **macOS** and **Linux**.
 
 ---
 
